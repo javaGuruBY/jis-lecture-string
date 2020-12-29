@@ -29,24 +29,46 @@ class StringStaticTest {
     }
 
     @Test
-    public void stringFormat() {
+    public void stringformatSyntax() {
+        System.out.println(String.format("%d Hello world %s ", 1, "!"));
+    }
+
+    @Test
+    public void formatExamples() {
         String hello = "Hello, World!";
 
         System.out.println("String.format(\"|%s|\",  hello) = " + String.format("|%s|", hello));  //whole string
         System.out.println("String.format(\"|%30s|\",  hello) = " + String.format("|%30s|", hello)); //with width fixed
         System.out.println("String.format(\"|%3s|\",  hello) = " + String.format("|%3s|", hello)); //with width fixed if string wider
         System.out.println("String.format(\"|%.3s|\",  hello) = " + String.format("|%.3s|", hello)); //Maximum number of chars
-        System.out.println("String.format(\"|%3.3s|\",  hello) = " + String.format("|%.3s|", hello)); //with width fixed & maximum number of chars
+        System.out.println("String.format(\"|%3.3s|\",  hello) = " + String.format("|%3.3s|", hello)); //with width fixed & maximum number of chars
         System.out.println("String.format(\"|%-30s|\",  hello) = " + String.format("|%-30s|", hello));  //with justification
 
         System.out.println("String.format(\"My name is: %2$s\", \"first\", \"second\") = " + String.format("My name is: %2$s", "first", "second")); //with argument position in string (%2$)
 
         System.out.println("String.format(\"|%+-20.3f|\", 99.00) = " + String.format("|%+-20.3f|", 99.00));  //with leading +\- left align fixed 20 width floating and 3 digits precision
+
+        String format = "|%+-20.3f|";
+        System.out.println("String.format(format, 88.00) = " + String.format(format, 88.00)); // code smells
+
+        System.out.println("format.formatted(88.00) = " + format.formatted(88.00));
+    }
+
+    @Test
+    public void printLocalized() {
+        System.out.println(String.format("Today is %tA", LocalDateTime.now()));
+        System.out.println(String.format(Locale.CHINA, "Today is %tA", LocalDateTime.now()));
+        System.out.println(String.format(new Locale("be", "BY"), "Today is %tA", LocalDateTime.now()));
+        System.out.println(String.format(new Locale("be", "BY"), "Today is %tA", LocalDateTime.now()));
+        System.out.println(String.format(
+                new Locale("be", "BY"),
+                "Today is %1$tA, %1$td %1$tB %1$tY",
+                LocalDateTime.now()));
     }
 
     @Test
     public void stringFormatDate() {
-        Locale.setDefault( Locale.CHINA);
+        Locale.setDefault(Locale.CHINA);
         printDates();
         Locale.setDefault(Locale.UK);
         printDates();
